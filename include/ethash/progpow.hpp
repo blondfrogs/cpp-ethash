@@ -37,7 +37,7 @@ bool verify(const epoch_context& context, int block_number, const hash256& heade
     const hash256& mix_hash, uint64_t nonce, const hash256& boundary) noexcept;
 
 bool light_verify(const hash256& header_hash,
-        const hash256& mix_hash, uint64_t nonce, const hash256& boundary, hash256& final) noexcept;
+        const hash256& mix_hash, const std::string& str_nonce, const hash256& boundary, hash256& final) noexcept;
 
 search_result search_light(const epoch_context& context, int block_number,
     const hash256& header_hash, const hash256& boundary, uint64_t start_nonce,

@@ -330,8 +330,10 @@ bool verify(const epoch_context& context, int block_number, const hash256& heade
 }
 
 bool light_verify(const hash256& header_hash,
-                  const hash256& mix_hash, uint64_t nonce, const hash256& boundary, hash256& final) noexcept
+                  const hash256& mix_hash, const std::string& str_nonce, const hash256& boundary, hash256& final) noexcept
 {
+    uint64_t nonce = std::stoull(str_nonce, nullptr, 16);
+
     const uint64_t seed = keccak_progpow_64(header_hash, nonce);
     const hash256 final_hash = keccak_progpow_256(header_hash, seed, mix_hash);
     if (!is_less_or_equal(final_hash, boundary))
