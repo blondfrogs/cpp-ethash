@@ -8,6 +8,7 @@
 #include "endianness.hpp"
 #include "ethash-internal.hpp"
 #include "kiss99.hpp"
+#include "../../test/unittests/helpers.hpp"
 #include <ethash/keccak.hpp>
 
 #include <array>
@@ -329,9 +330,14 @@ bool verify(const epoch_context& context, int block_number, const hash256& heade
     return is_equal(expected_mix_hash, mix_hash);
 }
 
-bool light_verify(const hash256& header_hash,
-                  const hash256& mix_hash, const std::string& str_nonce, const hash256& boundary, hash256& final) noexcept
+bool light_verify(const std::string& str_header_hash,
+                  const std::string& str_mix_hash, const std::string& str_nonce, const std::string& str_boundary, std::string& str_final) noexcept
 {
+
+    hash256 header_hash = to_hash256(str_header_hash);
+    hash256 mix_hash = to_hash256(str_mix_hash);
+    hash256 boundary = to_hash256(str_boundary);
+
     uint64_t nonce = std::stoull(str_nonce, nullptr, 16);
 
     const uint64_t seed = keccak_progpow_64(header_hash, nonce);
@@ -339,7 +345,7 @@ bool light_verify(const hash256& header_hash,
     if (!is_less_or_equal(final_hash, boundary))
         return false;
 
-    final = final_hash;
+    str_final = to_hex(final_hash);
     return true;
 }
 

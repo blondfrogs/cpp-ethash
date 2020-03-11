@@ -26,14 +26,14 @@ int main(int argc, const char* argv[])
     }
 
 
-    ethash::hash256 header = to_hash256(str_header_hash);
-    ethash::hash256 mix_hash = to_hash256(str_mix_hash);
-    ethash::hash256 boundary = to_hash256(str_boundary);
+//    ethash::hash256 header = to_hash256(str_header_hash);
+//    ethash::hash256 mix_hash = to_hash256(str_mix_hash);
+//    ethash::hash256 boundary = to_hash256(str_boundary);
 
-    ethash::hash256 final_hash = {};
+    std::string final_hash;
 
-    if (progpow::light_verify(header, mix_hash, str_nonce, boundary, final_hash))
-        std::cout << to_hex(final_hash) << std::endl;
+    if (progpow::light_verify(str_header_hash, str_mix_hash, str_nonce, str_boundary, final_hash))
+        std::cout << final_hash << std::endl;
     else {
         std::cout << "Not found" << std::endl;
     }
