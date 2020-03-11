@@ -7,6 +7,7 @@ add_subdirectory(fakeminer)
 add_subdirectory(integration)
 add_subdirectory(tools)
 add_subdirectory(unittests)
+add_subdirectory(lightverify)
 
 if(ETHASH_FUZZING)
     add_subdirectory(fuzzing)
