@@ -330,8 +330,8 @@ bool verify(const epoch_context& context, int block_number, const hash256& heade
     return is_equal(expected_mix_hash, mix_hash);
 }
 
-bool light_verify(const std::string& str_header_hash,
-                  const std::string& str_mix_hash, const std::string& str_nonce, const std::string& str_boundary, std::string& str_final) noexcept
+bool light_verify(const char* str_header_hash,
+                  const char* str_mix_hash, const char* str_nonce, const char* str_boundary, char* str_final) noexcept
 {
 
     hash256 header_hash = to_hash256(str_header_hash);
@@ -345,7 +345,7 @@ bool light_verify(const std::string& str_header_hash,
     if (!is_less_or_equal(final_hash, boundary))
         return false;
 
-    str_final = to_hex(final_hash);
+    memcpy(str_final,&to_hex(final_hash)[0],64);
     return true;
 }
 
@@ -376,7 +376,5 @@ search_result search(const epoch_context_full& context, int block_number,
     }
     return {};
 }
-
-
 
 }  // namespace progpow

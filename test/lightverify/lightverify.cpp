@@ -1,8 +1,6 @@
 
 #include <ethash/progpow.hpp>
-#include <ethash/hash_types.hpp>
 #include <iostream>
-#include "../unittests/helpers.hpp"
 
 int main(int argc, const char* argv[])
 {
@@ -25,17 +23,12 @@ int main(int argc, const char* argv[])
             str_boundary = std::string(argv[++i]);
     }
 
+    char final_hash[64];
 
-//    ethash::hash256 header = to_hash256(str_header_hash);
-//    ethash::hash256 mix_hash = to_hash256(str_mix_hash);
-//    ethash::hash256 boundary = to_hash256(str_boundary);
-
-    std::string final_hash;
-
-    if (progpow::light_verify(str_header_hash, str_mix_hash, str_nonce, str_boundary, final_hash))
-        std::cout << final_hash << std::endl;
+    if (progpow::light_verify(str_header_hash.c_str(), str_mix_hash.c_str(), str_nonce.c_str(), str_boundary.c_str(), final_hash))
+        printf("%.*s\n", 64, final_hash);
     else {
-        std::cout << "Not found" << std::endl;
+        printf("Not found\n");
     }
 
     return 0;
