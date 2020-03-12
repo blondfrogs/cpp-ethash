@@ -156,7 +156,7 @@ int main(int argc, const char* argv[])
     evhttp_set_gencb(Server.get(), OnReq, nullptr);
     if (event_dispatch() == -1)
     {
-        std::cerr << "Failed to run messahe loop." << std::endl;
+        std::cerr << "Failed to run message loop." << std::endl;
         return -1;
     }
     return 0;
