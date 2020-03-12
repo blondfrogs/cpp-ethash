@@ -8,6 +8,7 @@ add_subdirectory(integration)
 add_subdirectory(tools)
 add_subdirectory(unittests)
 add_subdirectory(lightverify)
+add_subdirectory(daemon)
 
 if(ETHASH_FUZZING)
     add_subdirectory(fuzzing)
