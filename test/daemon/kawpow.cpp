@@ -124,16 +124,16 @@ int main(int argc, const char* argv[])
             errno = 0; // strtoull will not set errno if valid
             unsigned long long int n = strtoull(nonce_str, &endp, 16);
             nNonce = (uint64_t) n;
-            if (nNonce == 0 && endp == nonce_str) {
-                std::cout << "Nonce wasn't a string" << std::endl;
-                return;
-            } else if (nNonce == ULLONG_MAX && errno) {
-                std::cout << "Hex value was out of range" << std::endl;
-                return;
-            } else if (*endp) {
-                std::cout << "Invalid hex string" << std::endl;
-                return;
-            }
+//            if (nNonce == 0 && endp == nonce_str) {
+//                std::cout << "Nonce wasn't a string" << std::endl;
+//                return;
+//            } else if (nNonce == ULLONG_MAX && errno) {
+//                std::cout << "Hex value was out of range" << std::endl;
+//                return;
+//            } else if (*endp) {
+//                std::cout << "Invalid hex string" << std::endl;
+//                return;
+//            }
 
             uint32_t nHeight;
             errno = 0;
@@ -141,16 +141,16 @@ int main(int argc, const char* argv[])
             errno = 0; // strtoul will not set errno if valid
             unsigned long int nH = strtoul(height_str, &endp, 10);
             nHeight = (uint32_t) nH;
-            if (nHeight == 0 && endp == height_str) {
-                std::cout << "Nonce wasn't a string" << std::endl;
-                return;
-            } else if (nHeight == ULONG_MAX && errno) {
-                std::cout << "Hex value was out of range" << std::endl;
-                return;
-            } else if (*endp) {
-                std::cout << "Invalid hex string" << std::endl;
-                return;
-            }
+//            if (nHeight == 0 && endp == height_str) {
+//                std::cout << "Nonce wasn't a string" << std::endl;
+//                return;
+//            } else if (nHeight == ULONG_MAX && errno) {
+//                std::cout << "Hex value was out of range" << std::endl;
+//                return;
+//            } else if (*endp) {
+//                std::cout << "Invalid hex string" << std::endl;
+//                return;
+//            }
 
             epoch_number = (int) nHeight / ETHASH_EPOCH_LENGTH;
             if (!context_light || context_light->epoch_number != epoch_number)
