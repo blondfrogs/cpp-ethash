@@ -136,17 +136,14 @@ int main(int argc, const char* argv[])
             std::string block_met = "false";
             std::string mix_match = "false";
             if (result.mix_hash == mix_hash) {
-                printf("mix hash matches\n");
                 mix_match = "true";
             }
 
             if (ethash::is_less_or_equal(result.final_hash, share_boundary)) {
-                printf("final hash meets share boundary\n");
                 share_met = "true";
             }
 
             if (ethash::is_less_or_equal(result.final_hash, block_boundary)) {
-                printf("final hash meets block boundary\n");
                 block_met = "true";
             }
 
