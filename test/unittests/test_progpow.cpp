@@ -17,9 +17,9 @@ TEST(progpow, revision)
     static_assert(progpow::revision[1] == '.', "");
     static_assert(progpow::revision[2] == '9', "");
     static_assert(progpow::revision[3] == '.', "");
-    static_assert(progpow::revision[4] == '3', "");
-    EXPECT_EQ(progpow::revision, "0.9.3");
-    EXPECT_EQ(progpow::revision, (std::string{"0.9.3"}));
+    static_assert(progpow::revision[4] == '4', "");
+    EXPECT_EQ(progpow::revision, "0.9.4");
+    EXPECT_EQ(progpow::revision, (std::string{"0.9.4"}));
 }
 
 TEST(progpow, l1_cache)
@@ -43,8 +43,8 @@ TEST(progpow, hash_empty)
     auto& context = get_ethash_epoch_context_0();
 
     const auto result = progpow::hash(context, 0, {}, 0);
-    const auto mix_hex = "f4ac202715ded4136e72887c39e63a4738331c57fd9eb79f6ec421c281aa8743";
-    const auto final_hex = "b3bad9ca6f7c566cf0377d1f8cce29d6516a96562c122d924626281ec948ef02";
+    const auto mix_hex = "4b0050b03f6823e8ed6aabfceb2debca378682f987c7127a1ade109621b90afd";
+    const auto final_hex = "412ce3770325c5802cf27cab26df1525fcd3f20b4c026b8d798120fffb96243c";
     EXPECT_EQ(to_hex(result.mix_hash), mix_hex);
     EXPECT_EQ(to_hex(result.final_hash), final_hex);
 }
@@ -59,8 +59,8 @@ TEST(progpow, hash_30000)
     auto context = ethash::create_epoch_context(ethash::get_epoch_number(block_number));
 
     const auto result = progpow::hash(*context, block_number, header, nonce);
-    const auto mix_hex = "eb6deec664e2556f710d5b57319af1092cf66634a3b40d14c348d45e577e9fa3";
-    const auto final_hex = "0f9c782128aba8f815cc3cf640b92b9cd007c8f94df3075005bdcbb3577f3345";
+    const auto mix_hex = "63895895e4a4f656cab1a81a5d77cefe97b272121fb5b1350cf6e4d6f39234d9";
+    const auto final_hex = "1b05fda9eca03a027618a0b38d8c41e1f6715d6c56a5442fc0d528a4c719d188";
     EXPECT_EQ(to_hex(result.mix_hash), mix_hex);
     EXPECT_EQ(to_hex(result.final_hash), final_hex);
 }
@@ -106,8 +106,8 @@ TEST(progpow, search)
     auto& ctxl = reinterpret_cast<const ethash::epoch_context&>(ctx);
 
     auto boundary = to_hash256("00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-    auto sr = progpow::search(ctx, 0, {}, boundary, 200, 100);
-    auto srl = progpow::search_light(ctxl, 0, {}, boundary, 200, 100);
+    auto sr = progpow::search(ctx, 0, {}, boundary, 100, 100);
+    auto srl = progpow::search_light(ctxl, 0, {}, boundary, 100, 100);
 
     EXPECT_EQ(sr.mix_hash, ethash::hash256{});
     EXPECT_EQ(sr.final_hash, ethash::hash256{});
@@ -116,17 +116,17 @@ TEST(progpow, search)
     EXPECT_EQ(sr.final_hash, srl.final_hash);
     EXPECT_EQ(sr.nonce, srl.nonce);
 
-    sr = progpow::search(ctx, 0, {}, boundary, 100, 100);
-    srl = progpow::search_light(ctxl, 0, {}, boundary, 100, 100);
+    sr = progpow::search(ctx, 0, {}, boundary, 0, 100);
+    srl = progpow::search_light(ctxl, 0, {}, boundary, 0, 100);
 
     EXPECT_NE(sr.mix_hash, ethash::hash256{});
     EXPECT_NE(sr.final_hash, ethash::hash256{});
-    EXPECT_EQ(sr.nonce, 157);
+    EXPECT_EQ(sr.nonce, 74);
     EXPECT_EQ(sr.mix_hash, srl.mix_hash);
     EXPECT_EQ(sr.final_hash, srl.final_hash);
     EXPECT_EQ(sr.nonce, srl.nonce);
 
-    auto r = progpow::hash(ctx, 0, {}, 157);
+    auto r = progpow::hash(ctx, 0, {}, 74);
     EXPECT_EQ(sr.final_hash, r.final_hash);
     EXPECT_EQ(sr.mix_hash, r.mix_hash);
 }
